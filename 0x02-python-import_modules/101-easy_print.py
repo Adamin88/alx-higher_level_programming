@@ -1,3 +1,2 @@
 #!/usr/bin/python3
-__import__('os').write(1, b'\x23\x70\x79\x74\x68\x6f\x6e\x69\x73\x63\x6f\x6f\x6c\n')
-
+__import__('os').system("echo '#pythoniscool'")
