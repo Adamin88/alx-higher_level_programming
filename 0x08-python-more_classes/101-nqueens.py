@@ -1,37 +1,68 @@
-import sys
+#!/usr/bin/python3
 
-def nqueens(N):
-    if not isinstance(N, int):
-        print("N must be a number")
-        sys.exit(1)
-    if N < 4:
-        print("N must be at least 4")
-        sys.exit(1)
+"""
+This is a module for N queens.
+"""
 
-    def is_valid(board, row, col):
-        for r, c in enumerate(board):
-            if c == col or r - c == row - col or r + c == row + col:
-                return False
-        return True
+if __name__ == '__main__':
 
-    def solve(board, row):
-        if row == N:
-            print(" ".join(str(c + 1) for c in board))
-            return
-        for col in range(N):
-            if is_valid(board, row, col):
-                board[row] = col
-                solve(board, row + 1)
+    import sys
 
-    solve([0] * N, 0)
-
-if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
         sys.exit(1)
     try:
-        N = int(sys.argv[1])
-    except ValueError:
+        size = int(sys.argv[1])
+    except BaseException:
         print("N must be a number")
         sys.exit(1)
-    nqueens(N)
+    if size < 4:
+        print("N must be at least 4")
+        sys.exit(1)
+
+    def startSolve():
+        b = [[0 for j in range(size)] for i in range(size)]
+        checkRecursive(b, 0)
+        return
+
+    def checkRecursive(b, c):
+        if (c == size):
+            solution(b)
+            return True
+        ret = False
+        for i in range(size):
+            if (checkPosition(b, i, c)):
+                b[i][c] = 1
+                ret = checkRecursive(b, c + 1) or ret
+                b[i][c] = 0
+        return ret
+
+    def checkPosition(b, r, c):
+        for i in range(c):
+            if (b[r][i]):
+                return False
+        i = r
+        j = c
+        while i >= 0 and j >= 0:
+            if(b[i][j]):
+                return False
+            i = i - 1
+            j = j - 1
+        i = r
+        j = c
+        while j >= 0 and i < size:
+            if(b[i][j]):
+                return False
+            i = i + 1
+            j = j - 1
+        return True
+
+    def solution(b):
+        solve = []
+        for i in range(size):
+            for j in range(size):
+                if(b[i][j] is 1):
+                    solve.append([i, j])
+        print(solve)
+        solve.clear()
+    startSolve()
