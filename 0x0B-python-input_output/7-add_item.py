@@ -1,17 +1,19 @@
 #!/usr/bin/python3
-""" add items to a file """
+
+"""
+ save items to a file.
+"""
+
 import sys
 import os.path
 
+args = sys.argv[1:]
 
-load_from_json_file = __import__('6-load_from_json_file').load_from_json_file
-save_to_json_file = __import__('5-save_to_json_file').save_to_json_file
+save_to_json_file = __import__('7-save_to_json_file').save_to_json_file
+load_from_json_file = __import__('8-load_from_json_file').load_from_json_file
 
+item = []
+if os.path.exists("./add_item.json"):
+    item = load_from_json_file("add_item.json")
 
-L = []
-if os.path.exists('add_item.json'):
-    L = load_from_json_file('add_item.json')
-for i in range(1, len(sys.argv)):
-    L += [sys.argv[i]]
-
-save_to_json_file(L, 'add_item.json')
+save_to_json_file(item + args, "add_item.json")
