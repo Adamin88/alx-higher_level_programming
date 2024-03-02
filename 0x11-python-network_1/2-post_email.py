@@ -24,5 +24,7 @@ try:
     with urllib.request.urlopen(url, data=data) as response:
         # Decode and print the body of the response
         print(response.read().decode('utf-8'))
+except urllib.error.URLError as e:
+    print("Error:", e.reason)
 except Exception as e:
     print("Error:", e)
