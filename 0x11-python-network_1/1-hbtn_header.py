@@ -1,24 +1,13 @@
-import urllib.request
+#!/usr/bin/python3
+"""
+    A script that sends a request to the URL and displays the
+    value of the X-Request-Id found in the response
+"""
+
 import sys
+import urllib.request
 
-"""
-Script to fetch the value of the X-Request-Id header from a given URL.
-Usage: python script.py <URL>
-"""
 
-if len(sys.argv) != 2:
-    print("Usage: python script.py <URL>")
-    sys.exit(1)
-
-url = sys.argv[1]
-
-try:
-    with urllib.request.urlopen(url) as response:
-        # Retrieve the value of the X-Request-Id header
-        x_request_id = response.headers.get('X-Request-Id')
-        if x_request_id:
-            print(x_request_id)
-        else:
-            print("X-Request-Id header not found in the response.")
-except Exception as e:
-    print("Error:", e)
+if __name__ == "__main__":
+    with urllib.request.urlopen(sys.argv[1]) as resp:
+        print('{}'.format(resp.info().get('X-Request-id')))
